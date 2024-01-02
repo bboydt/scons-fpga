@@ -14,4 +14,4 @@ env = Environment(tools = ['ecp5', ...], ...)
 blinky_bitstream = env.Bitstream("blinky.v")
 ```
 
-For constraint file's, I've been including them in `NEXTPNRFLAGS`.
+For constraint file's, I've been including them in `NEXTPNR_FLAGS`.

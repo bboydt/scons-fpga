@@ -2,16 +2,20 @@
 A SCons tool for building ECP5 bitstreams.
 
 ## How to use
-1) Add `ecp5.py` to your project's `site_scons/site_tools` directory.
 
-2) Include the tool in your environment.
+1) Add `yosys.py`, `nextpnr.py`, and `trellis.py` to your SCons tools (i.e. `site_scons/site_tools/`)
+
+2) Include the tools in your environment and configure flags. See the tool files for construction variable names.
 ```python
-env = Environment(tools = ['ecp5', ...], ...)
+env = Environment(tools = ['yosys', 'nextpnr.py', 'trellis.py', ...], ...)
 ```
 
 3) Build a bitstream!
 ```python
-blinky_bitstream = env.Bitstream("blinky.v")
+ast = env.YosysScript("synth_soc.ys")
+textcfg = env.Ecp5Pnr(ast)
+bitstream = env.Ecp5Bitstream(textcfg)
 ```
 
-For constraint files, I've been including them in `NEXTPNR_FLAGS`.
+## Note on Yosys Tool
+I'm not very happy with how this works atm. It will likely change.

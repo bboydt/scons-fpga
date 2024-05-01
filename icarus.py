@@ -9,34 +9,26 @@
 from SCons.Builder import Builder
 from SCons.Action import Action
 
-vvp_file_builder = None
-vvp_file_action = None
-vvp_run_action = None
-
-def vvp_run_method(self, target):
-    self.AddPostAction(target, vvp_run_action)
+vvp_builder = None
+vvp_action = None
 
 def generate(env):
 
     # Create actions and builders
     #
 
-    global vvp_file_builder
-    if (vvp_file_builder is None):
-        vvp_file_builder = Builder(action = {},
+    global vvp_builder
+    if (vvp_builder is None):
+        vvp_builder = Builder(action = {},
                               prefix = '$VVPPREFIX',
                               suffix = '$VVPSUFFIX',
                               emitter = {},
                               source_ext_match = None,
                               single_source = False)
 
-    global vvp_file_action
-    if (vvp_file_action is None):
-        vvp_file_action = Action('$VVPCOM', '$VVPCOMSTR')
-
-    global vvp_run_action
-    if (vvp_run_action is None):
-        vvp_run_action = Action('$VVPRUNCOM', '$VVPRUNCOMSTR')
+    global vvp_action
+    if (vvp_action is None):
+        vvp_action = Action('$VVPCOM', '$VVPCOMSTR')
 
     # Prep environment
     #
@@ -46,8 +38,8 @@ def generate(env):
     if ('VERILOGSUFFIX' not in env):
         env['VERILOGSUFFIX'] = '';
 
-    env['VPPPREFIX'] = ''
-    env['VPPSUFFIX'] = '.vvp'
+    env['VVPPREFIX'] = ''
+    env['VVPSUFFIX'] = '.vvp'
 
     env['IV'] = 'iverilog'
     env['IVFLAGS'] = ''
@@ -67,17 +59,13 @@ def generate(env):
     env['VVPCOM'] = '$IV $IVFLAGS $_VINCFLAGS $_VDEFFLAGS $_VPRMFLAGS -o $TARGET $SOURCES'
 
     env['VVP'] = 'vvp'
-    env['VVPFLAS'] = ''
-    env['VVPRUNCOM'] = '$VVP $VVPFLAGS $TARGET'
 
     # Add builders
     #
 
-    vvp_file_builder.add_action('$VERILOGSUFFIX', vvp_file_action)
+    vvp_builder.add_action('$VERILOGSUFFIX', vvp_action)
 
-    env['BUILDERS']['VVP'] = vvp_file_builder
-
-    env.AddMethod(vvp_run_method, 'VVPRun')
+    env['BUILDERS']['VVP'] = vvp_builder
 
 def exists():
     return True

@@ -8,22 +8,22 @@ from SCons.Builder import Builder
 def generate(env):
 
     ecp5_pnr_builder = Builder(
-        action = "$NEXTPNR-ecp5 $PNRFLAGS --json $SOURCE --textcfg $TARGET",
-        suffix = ".config",
-        src_suffix = ".json",
-        src_builder = "YosysScript",
+        action = '$NEXTPNR-ecp5 $PNRFLAGS --json $SOURCE --textcfg $TARGET',
+        suffix = '.config',
+        src_suffix = '.json',
+        src_builder = 'YosysScript',
         single_source = True
     )
 
     # TODO generic gowin ice40 machxo2 nexus
 
     env.Replace(
-        NEXTPNR = "nextpnr"
+        NEXTPNR = 'nextpnr'
     )
     
     env.Append(
         BUILDERS = {
-            "Ecp5Pnr": ecp5_pnr_builder
+            'Ecp5Pnr': ecp5_pnr_builder
         },
         PNRFLAGS = []
     )

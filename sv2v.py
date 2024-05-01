@@ -41,13 +41,13 @@ def generate(env):
     env['SV2V'] = 'sv2v'
     env['SV2VFLAGS'] = ''
 
-    env["SV2VINCPREFIX"] = "-I"
-    env["SV2VINCSUFFIX"] = ""
-    env["_SV2VINCFLAGS"] = "$( ${_concat(SV2VINCPREFIX, VPATH, SV2VINCSUFFIX, __env__, RDirs)} $)"
+    env['SV2VINCPREFIX'] = '-I'
+    env['SV2VINCSUFFIX'] = ''
+    env['_SV2VINCFLAGS'] = '$( ${_concat(SV2VINCPREFIX, VPATH, SV2VINCSUFFIX, __env__, RDirs)} $)'
 
-    env["SV2VDEFPREFIX"] = "-D"
-    env["SV2VDEFSUFFIX"] = ""
-    env["_SV2VDEFFLAGS"] = "$( ${_defines(SV2VDEFPREFIX, VDEFINES, SV2VDEFSUFFIX, __env__)} $)"
+    env['SV2VDEFPREFIX'] = '-D'
+    env['SV2VDEFSUFFIX'] = ''
+    env['_SV2VDEFFLAGS'] = '$( ${_defines(SV2VDEFPREFIX, VDEFINES, SV2VDEFSUFFIX, __env__)} $)'
 
     env['SV2VCOM'] = '$SV2V $SV2VFLAGS $_SV2VINCFLAGS $_SV2VDEFFLAGS -w=$TARGET $SOURCES'
 
